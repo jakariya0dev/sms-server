@@ -1,0 +1,55 @@
+model School {
+  id   String @id @default(uuid())
+  code String @unique @default(cuid())
+
+  // Basic Information
+  name      String
+  shortName String?
+  subdomain String? @unique
+
+  email   String?
+  phone   String?
+  website String?
+
+  registrationNo String?
+  eiin           String?
+
+  // Branding
+  logoUrl    String?
+  faviconUrl String?
+
+  primaryColor   String? @default("#2563EB")
+  secondaryColor String? @default("#10B981")
+
+  // Address
+  addressLine1 String? // Village/House/Road
+  addressLine2 String? // Post Office
+  upazila      String?
+  district     String?
+
+  // Relations
+  users           User[]
+  students        Student[]
+  classes         Class[]
+  sections        Section[]
+  academicYears   AcademicYear[]
+  feeStructures   FeeStructure[]
+  feeCategories   FeeCategory[]
+  studentInvoices StudentInvoice[]
+  payments        Payment[]
+  attendances     Attendance[]
+  teachers        Teacher[]
+  subjects        Subject[]
+  classSubjects   ClassSubject[]
+  gradeScales     GradeScale[]
+  exams           Exam[]
+  examClasses     ExamClass[]
+  examSchedules   ExamSchedule[]
+  studentMarks    StudentMark[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([name])
+  @@index([district])
+}

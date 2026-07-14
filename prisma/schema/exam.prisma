@@ -1,0 +1,130 @@
+model Exam {
+  id String @id @default(uuid())
+
+  schoolId       String
+  academicYearId String
+
+  name String
+
+  description String?
+
+  isPublished Boolean   @default(false)
+  publishedAt DateTime?
+
+  // Relations
+  school       School       @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+  academicYear AcademicYear @relation(fields: [academicYearId], references: [id], onDelete: Cascade)
+
+  examClasses ExamClass[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([schoolId, academicYearId, name])
+  @@index([schoolId])
+  @@index([academicYearId])
+}
+
+model ExamClass {
+  id String @id @default(uuid())
+
+  schoolId String
+
+  examId  String
+  classId String
+
+  exam   Exam   @relation(fields: [examId], references: [id], onDelete: Cascade)
+  class  Class  @relation(fields: [classId], references: [id], onDelete: Cascade)
+  school School @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+
+  schedules ExamSchedule[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([examId, classId])
+  @@index([schoolId])
+}
+
+model ExamSchedule {
+  id String @id @default(uuid())
+
+  schoolId String
+
+  examClassId String
+
+  subjectId String
+
+  displayOrder Int
+
+  examDate DateTime
+
+  startTime String
+  endTime   String
+
+  totalMarks Int
+  passMarks  Int
+
+  room String?
+
+  examClass ExamClass @relation(fields: [examClassId], references: [id], onDelete: Cascade)
+  subject   Subject   @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+  school    School    @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+
+  marks StudentMark[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([examClassId, subjectId])
+  @@index([schoolId])
+}
+
+model StudentMark {
+  id String @id @default(uuid())
+
+  schoolId String
+
+  examScheduleId String
+
+  studentId String
+
+  obtainedMarks Decimal @db.Decimal(5, 2)
+
+  remarks String?
+
+  examSchedule ExamSchedule @relation(fields: [examScheduleId], references: [id], onDelete: Cascade)
+
+  student Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  school School @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([examScheduleId, studentId])
+  @@index([schoolId])
+}
+
+model GradeScale {
+  id String @id @default(uuid())
+
+  schoolId String
+
+  grade String
+
+  minMarks Decimal @db.Decimal(5, 2)
+  maxMarks Decimal @db.Decimal(5, 2)
+
+  gradePoint Decimal @db.Decimal(3, 2)
+
+  remarks String?
+
+  school School @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([schoolId, grade])
+  @@index([schoolId])
+}

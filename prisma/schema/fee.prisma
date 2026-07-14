@@ -1,0 +1,117 @@
+model FeeCategory {
+  id String @id @default(uuid())
+
+  schoolId String
+
+  name        String
+  description String?
+
+  isActive Boolean @default(true)
+
+  school        School         @relation(fields: [schoolId], references: [id])
+  feeStructures FeeStructure[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([schoolId, name])
+}
+
+model FeeStructure {
+  id String @id @default(uuid())
+
+  schoolId String
+
+  academicYearId String
+
+  classId String
+
+  feeCategoryId String
+
+  amount Decimal @db.Decimal(10, 2)
+
+  discount Decimal? @db.Decimal(10, 2)
+
+  lateFee Decimal? @db.Decimal(10, 2)
+
+  dueDate DateTime?
+
+  frequency FeeFrequency
+
+  isActive Boolean @default(true)
+
+  // Relations
+  school       School           @relation(fields: [schoolId], references: [id])
+  academicYear AcademicYear     @relation(fields: [academicYearId], references: [id])
+  class        Class            @relation(fields: [classId], references: [id])
+  feeCategory  FeeCategory      @relation(fields: [feeCategoryId], references: [id])
+  invoices     StudentInvoice[]
+
+  // Audit fields
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([schoolId])
+  @@index([academicYearId])
+  @@index([classId])
+}
+
+model StudentInvoice {
+  id String @id @default(uuid())
+
+  // Invoice details
+  receiptNo      String @unique
+  schoolId       String
+  studentId      String
+  feeStructureId String
+
+  // Fee details
+  amount      Decimal @db.Decimal(10, 2)
+  discount    Decimal @default(0) @db.Decimal(10, 2)
+  lateFee     Decimal @default(0) @db.Decimal(10, 2)
+  totalAmount Decimal @db.Decimal(10, 2)
+
+  // Payment details
+  paymentStatus PaymentStatus @default(PENDING)
+  payment       Payment?
+  issuedAt      DateTime      @default(now())
+  dueDate       DateTime
+
+  // Relations
+  school       School       @relation(fields: [schoolId], references: [id])
+  student      Student      @relation(fields: [studentId], references: [id])
+  feeStructure FeeStructure @relation(fields: [feeStructureId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([studentId])
+  @@index([paymentStatus])
+  @@index([schoolId])
+}
+
+model Payment {
+  id String @id @default(uuid())
+
+  schoolId  String
+  invoiceId String @unique
+
+  // Payment details
+  paymentMethod PaymentMethod
+  paidAmount    Decimal       @db.Decimal(10, 2)
+  paidAt        DateTime      @default(now())
+  transactionId String?
+
+  remarks String?
+
+  // Relations
+  school  School         @relation(fields: [schoolId], references: [id])
+  invoice StudentInvoice @relation(fields: [invoiceId], references: [id])
+
+  // Audit fields
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([schoolId])
+  @@index([paidAt])
+}

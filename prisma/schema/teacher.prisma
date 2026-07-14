@@ -1,0 +1,33 @@
+model Teacher {
+  id String @id @default(uuid())
+
+  schoolId String
+  userId   String @unique
+
+  designation    String?
+  specialization String?
+
+  // Additional teacher fields go here
+  photoUrl    String?
+  phone       String?
+  email       String?
+  address     String?
+  dateOfBirth DateTime?
+  gender      Gender?
+  religion    Religion?
+  bloodGroup  BloodGroup?
+  department  Department?
+  shift       Shift?
+  status      EmployeeStatus?
+
+  // audit fields
+  isDeleted Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  createdBy String?
+  updatedBy String?
+
+  // relations
+  school School @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+}

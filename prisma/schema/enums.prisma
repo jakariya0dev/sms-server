@@ -1,0 +1,134 @@
+// === Enums ===
+enum Department {
+  GENERAL
+  SCIENCE
+  COMMERCE
+  ARTS
+  VOCATIONAL
+  OTHER
+}
+
+enum Shift {
+  MORNING
+  DAY
+  EVENING
+  NIGHT
+}
+
+enum StudentStatus {
+  ACTIVE
+  INACTIVE
+  GRADUATED
+  TRANSFERRED
+  DROPPED
+  RUSTICATED
+}
+
+enum EmployeeStatus {
+  ACTIVE
+  INACTIVE
+  RETIRED
+  TERMINATED
+  RESIGNED
+  SUSPENDED
+}
+
+enum StudentGuardianType {
+  FATHER
+  MOTHER
+  LOCAL_GUARDIAN
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
+enum Religion {
+  ISLAM
+  HINDUISM
+  CHRISTIANITY
+  BUDDHISM
+  OTHER
+}
+
+enum BloodGroup {
+  A_POSITIVE
+  A_NEGATIVE
+  B_POSITIVE
+  B_NEGATIVE
+  AB_POSITIVE
+  AB_NEGATIVE
+  O_POSITIVE
+  O_NEGATIVE
+}
+
+enum UserRole {
+  SUPERADMIN // The SaaS Platform Owner
+  SYSTEM_ADMIN // IT Admin managed by the SaaS owner
+  SCHOOL_ADMIN // Owner/Manager of a specific school tenant
+  PRINCIPAL
+  VICE_PRINCIPAL
+  ACCOUNTANT
+  TEACHER
+  LIBRARIAN
+  RECEPTIONIST
+  STUDENT
+  PARENT
+  OTHER
+}
+
+enum AttendanceStatus {
+  PRESENT
+  ABSENT
+  LATE
+  LEAVE
+  HOLIDAY
+  HALF_DAY
+}
+
+enum AttendanceSource {
+  BIOMETRIC
+  RFID
+  QR_CODE
+  MANUAL
+}
+
+enum AcademicYearStatus {
+  UPCOMING
+  ACTIVE
+  COMPLETED
+  ARCHIVED
+}
+
+// Fees related enums}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  OVERDUE
+}
+
+enum PaymentMethod {
+  CASH
+  BKASH
+  NAGAD
+  ROCKET
+  BANK
+  CARD
+}
+
+enum FeeFrequency {
+  ONE_TIME
+  MONTHLY
+  QUARTERLY
+  HALF_YEARLY
+  YEARLY
+}
+
+enum SubjectType {
+  THEORY
+  PRACTICAL
+  BOTH
+}

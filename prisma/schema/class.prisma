@@ -1,0 +1,49 @@
+model Class {
+  id String @id @default(uuid())
+
+  schoolId String
+
+  name         String
+  displayOrder Int
+
+  isActive Boolean @default(true)
+
+  school        School         @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+  sections      Section[]
+  students      Student[]
+  classSubjects ClassSubject[]
+  feeStructures FeeStructure[]
+  examClasses   ExamClass[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([schoolId, name])
+  @@unique([schoolId, displayOrder])
+  @@index([schoolId])
+  @@index([isActive])
+}
+
+model Section {
+  id String @id @default(uuid())
+
+  schoolId String
+  classId  String
+
+  name         String
+  displayOrder Int
+
+  isActive Boolean @default(true)
+
+  school   School    @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+  class    Class     @relation(fields: [classId], references: [id], onDelete: Cascade)
+  students Student[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([schoolId, name])
+  @@unique([schoolId, displayOrder])
+  @@index([schoolId])
+  @@index([isActive])
+}

@@ -1,0 +1,29 @@
+model AcademicYear {
+  id       String @id @default(uuid())
+  schoolId String
+
+  name String
+
+  startDate DateTime
+  endDate   DateTime
+
+  status    AcademicYearStatus @default(UPCOMING)
+  isCurrent Boolean            @default(false)
+  isLocked  Boolean            @default(false)
+
+  description String?
+
+  //  Relations
+  school        School         @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+  students      Student[]
+  feeStructures FeeStructure[]
+  exams         Exam[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([schoolId, name])
+  @@index([schoolId])
+  @@index([status])
+  @@index([isCurrent])
+}
