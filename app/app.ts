@@ -4,7 +4,7 @@ import type { Request, Response } from "express";
 
 // route imports
 import studentRouter from "./modules/students/student.routes";
-import schoolRouter from "./modules/schools/school.route";
+import schoolRouter from "./modules/school/school.route";
 import academicYearRouter from "./modules/academic-year/academicYear.route";
 
 const app = Express();
