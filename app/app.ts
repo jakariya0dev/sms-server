@@ -6,6 +6,7 @@ import type { Request, Response } from "express";
 import studentRouter from "./modules/students/student.routes";
 import schoolRouter from "./modules/school/school.route";
 import academicYearRouter from "./modules/academic-year/academicYear.route";
+import classRouter from "./modules/class/class.route";
 
 const app = Express();
 
@@ -14,12 +15,13 @@ app.use(Express.json());
 
 // Testing route to check if the server is running
 app.get("/", (req: Request, res: Response) => {
-  res.send("Hello, World!");
+  res.send("Server is Running...");
 });
 
 // Routes
 app.use("/students", studentRouter);
 app.use("/schools", schoolRouter);
 app.use("/academic-year", academicYearRouter);
+app.use("/classes", classRouter);
 
 export default app;
