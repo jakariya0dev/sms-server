@@ -1,28 +1,25 @@
-import Express from "express";
-import type { Request, Response } from "express";
-
-// route imports
-import studentRouter from "./modules/students/student.routes";
-
-const app = Express();
-
-// Middlewares
-app.use(Express.json()); 
-
-
-
-// Testing route to check if the server is running
-app.get("/", (req: Request, res: Response) => {
-  res.send("Hello, World!");
-});
-
-
-// Routes
-app.use("/students", studentRouter);
-
+import app from "./app";
+import { connectToDatabase, disconnectFromDatabase } from "./lib/dbConnection";
 
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+async function bootstrap() {
+  try {
+    await connectToDatabase();
+    app.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT}`);
+    });
+  } catch (error) {
+    console.error("Error starting server:", error);
+    process.exit(1);
+  }
+}
+
+bootstrap();
+
+// Handle graceful shutdown
+process.on("SIGINT", async () => {
+  console.log("Received SIGINT. Shutting down gracefully...");
+  await disconnectFromDatabase();
+  process.exit(0);
 });

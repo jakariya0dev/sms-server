@@ -1,68 +1,46 @@
 model Student {
-  id String @id @default(uuid())
-
-  schoolId  String
-  classId   String?
-  sectionId String?
-  userId    String? @unique
-
-  roll           String?
-  academicYearId String
-
-  nameBn String
-  nameEn String
-
-  email String?
-  phone String?
-
-  dateOfBirth DateTime
-
-  gender   Gender
-  religion Religion?
-
-  bloodGroup BloodGroup?
-
-  birthCertificateNo String?
-
-  nationality String @default("Bangladeshi")
-
-  presentSchoolName String?
-
-  photoUrl String?
-
-  department Department @default(GENERAL)
-
-  shift Shift @default(DAY)
-
-  status StudentStatus @default(ACTIVE)
-
-  permanentVillage  String?
-  permanentPost     String?
-  permanentUpazila  String?
-  permanentDistrict String?
-
-  presentVillage  String?
-  presentPost     String?
-  presentUpazila  String?
-  presentDistrict String?
-
-  isDeleted Boolean @default(false)
-
-  createdBy String?
-  updatedBy String?
-
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  deletedAt DateTime?
-
-  // Relations
-  school                 School                  @relation(fields: [schoolId], references: [id])
-  class                  Class?                  @relation(fields: [classId], references: [id])
-  section                Section?                @relation(fields: [sectionId], references: [id])
-  StudentGuardians       StudentGuardian[]
+  id                     String                  @id @default(uuid())
+  schoolId               String
+  classId                String
+  sectionId              String?
+  userId                 String                  @unique
+  roll                   String?
+  academicYearId         String
+  nameBn                 String
+  nameEn                 String
+  phone                  String
+  dateOfBirth            DateTime?
+  gender                 Gender
+  religion               Religion
+  bloodGroup             BloodGroup?
+  birthCertificateNo     String?
+  nationality            String                  @default("Bangladeshi")
+  presentSchoolName      String?
+  photoUrl               String?
+  department             Department?             @default(GENERAL)
+  shift                  Shift?                  @default(DAY)
+  status                 StudentStatus           @default(ACTIVE)
+  permanentVillage       String?
+  permanentPost          String?
+  permanentUpazila       String?
+  permanentDistrict      String?
+  presentVillage         String?
+  presentPost            String?
+  presentUpazila         String?
+  presentDistrict        String?
+  isDeleted              Boolean                 @default(false)
+  createdBy              String?
+  updatedBy              String?
+  createdAt              DateTime                @default(now())
+  updatedAt              DateTime                @updatedAt
+  deletedAt              DateTime?
   AcademicQualifications AcademicQualification[]
-  user                   User?                   @relation(fields: [userId], references: [id])
   academicYear           AcademicYear            @relation(fields: [academicYearId], references: [id])
+  class                  Class                   @relation(fields: [classId], references: [id])
+  school                 School                  @relation(fields: [schoolId], references: [id])
+  section                Section?                @relation(fields: [sectionId], references: [id])
+  user                   User                    @relation(fields: [userId], references: [id])
+  StudentGuardians       StudentGuardian[]
   StudentInvoices        StudentInvoice[]
   StudentMarks           StudentMark[]
 
@@ -72,65 +50,40 @@ model Student {
 }
 
 model StudentGuardian {
-  id String @id @default(uuid())
-
-  studentId String
-
+  id           String              @id @default(uuid())
+  studentId    String
   relationType StudentGuardianType
-
-  nameBn String
-
-  nameEn String?
-
-  dateOfBirth DateTime?
-
-  nationalId String?
-
-  profession String?
-
-  mobile String
-
-  email String?
-
+  nameBn       String?
+  nameEn       String?
+  dateOfBirth  DateTime?
+  nationalId   String?
+  profession   String?
+  mobile       String
+  email        String?
   yearlyIncome Decimal?
-
-  isPrimary Boolean @default(false)
-
-  student Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
-
-  createdAt DateTime @default(now())
-
-  updatedAt DateTime @updatedAt
+  isPrimary    Boolean             @default(false)
+  createdAt    DateTime            @default(now())
+  updatedAt    DateTime            @updatedAt
+  isDeleted    Boolean             @default(false)
+  student      Student             @relation(fields: [studentId], references: [id], onDelete: Cascade)
 
   @@index([studentId])
 }
 
 model AcademicQualification {
-  id String @id @default(uuid())
-
-  studentId String
-
-  examName String
-
-  instituteName String
-
-  board String?
-
-  roll String?
-
+  id                 String   @id @default(uuid())
+  studentId          String
+  examName           String
+  instituteName      String
+  board              String?
+  roll               String?
   registrationNumber String?
-
-  passingYear Int?
-
-  result String?
-
-  group String?
-
-  student Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
-
-  createdAt DateTime @default(now())
-
-  updatedAt DateTime @updatedAt
+  passingYear        Int?
+  result             String?
+  group              String?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+  student            Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
 
   @@index([studentId])
 }

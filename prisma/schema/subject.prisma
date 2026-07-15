@@ -1,28 +1,18 @@
 model Subject {
-  id String @id @default(uuid())
-
-  schoolId String
-
-  name String
-  code String
-
-  department Department?
-
-  subjectType SubjectType
-
-  isCompulsory Boolean @default(true)
-
-  isActive Boolean @default(true)
-
-  description String?
-
-  // Relations
-  school        School         @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+  id            String         @id @default(uuid())
+  schoolId      String
+  name          String
+  code          String
+  department    Department?
+  subjectType   SubjectType
+  isCompulsory  Boolean        @default(true)
+  isActive      Boolean        @default(true)
+  description   String?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
   classSubjects ClassSubject[]
   examSchedules ExamSchedule[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  school        School         @relation(fields: [schoolId], references: [id], onDelete: Cascade)
 
   @@unique([schoolId, code])
   @@unique([schoolId, name])
@@ -31,19 +21,15 @@ model Subject {
 }
 
 model ClassSubject {
-  id String @id @default(uuid())
-
+  id        String   @id @default(uuid())
   schoolId  String
   classId   String
   subjectId String
-
-  // Relations
-  school  School  @relation(fields: [schoolId], references: [id], onDelete: Cascade)
-  class   Class   @relation(fields: [classId], references: [id], onDelete: Cascade)
-  subject Subject @relation(fields: [subjectId], references: [id], onDelete: Cascade)
-
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  class     Class    @relation(fields: [classId], references: [id], onDelete: Cascade)
+  school    School   @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+  subject   Subject  @relation(fields: [subjectId], references: [id], onDelete: Cascade)
 
   @@unique([classId, subjectId])
   @@index([schoolId])

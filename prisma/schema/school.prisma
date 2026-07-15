@@ -1,54 +1,42 @@
 model School {
-  id   String @id @default(uuid())
-  code String @unique @default(cuid())
-
-  // Basic Information
-  name      String
-  shortName String?
-  subdomain String? @unique
-
-  email   String?
-  phone   String?
-  website String?
-
-  registrationNo String?
-  eiin           String?
-
-  // Branding
-  logoUrl    String?
-  faviconUrl String?
-
-  primaryColor   String? @default("#2563EB")
-  secondaryColor String? @default("#10B981")
-
-  // Address
-  addressLine1 String? // Village/House/Road
-  addressLine2 String? // Post Office
-  upazila      String?
-  district     String?
-
-  // Relations
-  users           User[]
-  students        Student[]
-  classes         Class[]
-  sections        Section[]
+  id              String           @id @default(uuid())
+  code            String           @unique @default(cuid())
+  name            String
+  shortName       String?
+  subdomain       String?          @unique
+  email           String?
+  phone           String?
+  website         String?
+  registrationNo  String?
+  eiin            String?
+  logoUrl         String?
+  faviconUrl      String?
+  primaryColor    String?          @default("#2563EB")
+  secondaryColor  String?          @default("#10B981")
+  addressLine1    String?
+  addressLine2    String?
+  upazila         String?
+  district        String?
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
   academicYears   AcademicYear[]
-  feeStructures   FeeStructure[]
-  feeCategories   FeeCategory[]
-  studentInvoices StudentInvoice[]
-  payments        Payment[]
   attendances     Attendance[]
-  teachers        Teacher[]
-  subjects        Subject[]
+  classes         Class[]
   classSubjects   ClassSubject[]
-  gradeScales     GradeScale[]
   exams           Exam[]
   examClasses     ExamClass[]
   examSchedules   ExamSchedule[]
+  feeCategories   FeeCategory[]
+  feeStructures   FeeStructure[]
+  gradeScales     GradeScale[]
+  payments        Payment[]
+  sections        Section[]
+  students        Student[]
+  studentInvoices StudentInvoice[]
   studentMarks    StudentMark[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  subjects        Subject[]
+  teachers        Teacher[]
+  users           User[]
 
   @@index([name])
   @@index([district])

@@ -1,22 +1,17 @@
 model Class {
-  id String @id @default(uuid())
-
-  schoolId String
-
-  name         String
-  displayOrder Int
-
-  isActive Boolean @default(true)
-
+  id            String         @id @default(uuid())
+  schoolId      String
+  name          String
+  displayOrder  Int
+  isActive      Boolean        @default(true)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
   school        School         @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+  classSubjects ClassSubject[]
+  examClasses   ExamClass[]
+  feeStructures FeeStructure[]
   sections      Section[]
   students      Student[]
-  classSubjects ClassSubject[]
-  feeStructures FeeStructure[]
-  examClasses   ExamClass[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 
   @@unique([schoolId, name])
   @@unique([schoolId, displayOrder])
@@ -25,22 +20,17 @@ model Class {
 }
 
 model Section {
-  id String @id @default(uuid())
-
-  schoolId String
-  classId  String
-
+  id           String    @id @default(uuid())
+  schoolId     String
+  classId      String
   name         String
   displayOrder Int
-
-  isActive Boolean @default(true)
-
-  school   School    @relation(fields: [schoolId], references: [id], onDelete: Cascade)
-  class    Class     @relation(fields: [classId], references: [id], onDelete: Cascade)
-  students Student[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  isActive     Boolean   @default(true)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  class        Class     @relation(fields: [classId], references: [id], onDelete: Cascade)
+  school       School    @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+  students     Student[]
 
   @@unique([schoolId, name])
   @@unique([schoolId, displayOrder])

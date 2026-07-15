@@ -1,4 +1,3 @@
-// === Enums ===
 enum Department {
   GENERAL
   SCIENCE
@@ -65,9 +64,9 @@ enum BloodGroup {
 }
 
 enum UserRole {
-  SUPERADMIN // The SaaS Platform Owner
-  SYSTEM_ADMIN // IT Admin managed by the SaaS owner
-  SCHOOL_ADMIN // Owner/Manager of a specific school tenant
+  SUPERADMIN
+  SYSTEM_ADMIN
+  SCHOOL_ADMIN
   PRINCIPAL
   VICE_PRINCIPAL
   ACCOUNTANT
@@ -101,8 +100,6 @@ enum AcademicYearStatus {
   COMPLETED
   ARCHIVED
 }
-
-// Fees related enums}
 
 enum PaymentStatus {
   PENDING
