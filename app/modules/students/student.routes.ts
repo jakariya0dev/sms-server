@@ -1,13 +1,13 @@
-import router from 'express';
-import StudentController from './student.controller';
+import { Router } from "express";
+import StudentController from "./student.controller";
 
-const studentRouter = router();
+const studentRouter = Router();
 const studentController = new StudentController();
 
-// studentRouter.get('/', studentController.getAllStudents);
-// studentRouter.get('/:id', studentController.getStudent);
-studentRouter.post('/create', studentController.createStudent);
-// studentRouter.put('/:id', studentController.updateStudent);
-// studentRouter.delete('/:id', studentController.deleteStudent);
+studentRouter.post("/", studentController.createStudent);
+studentRouter.get("/", studentController.getStudents);
+studentRouter.get("/:id", studentController.getStudentById);
+studentRouter.patch("/:id", studentController.updateStudent);
+studentRouter.delete("/:id", studentController.deleteStudent);
 
 export default studentRouter;

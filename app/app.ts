@@ -9,6 +9,7 @@ import academicYearRouter from "./modules/academic-year/academicYear.route";
 import classRouter from "./modules/class/class.route";
 import sectionRouter from "./modules/section/section.route";
 import teacherRouter from "./modules/teacher/teacher.route";
+import feeRouter from "./modules/fee/fee.route";
 
 const app = Express();
 
@@ -27,5 +28,6 @@ app.use("/academic-year", academicYearRouter);
 app.use("/classes", classRouter);
 app.use("/sections", sectionRouter);
 app.use("/teachers", teacherRouter);
+app.use("/fees", feeRouter);
 
 export default app;
