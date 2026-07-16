@@ -18,25 +18,7 @@
 // }
 import type { Request, Response } from "express";
 import { prisma } from "../../lib/prisma";
-
-interface UpdateSchool {
-  name?: string;
-  shortName?: string | null;
-  subdomain?: string | null;
-  email?: string | null;
-  phone?: string | null;
-  website?: string | null;
-  registrationNo?: string | null;
-  eiin?: string | null;
-  logoUrl?: string | null;
-  faviconUrl?: string | null;
-  primaryColor?: string | null;
-  secondaryColor?: string | null;
-  addressLine1?: string | null;
-  addressLine2?: string | null;
-  upazila?: string | null;
-  district?: string | null;
-}
+import type { UpdateSchool } from "./school.interface";
 
 class SchoolController {
   async createSchool(req: Request, res: Response) {

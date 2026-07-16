@@ -1,27 +1,6 @@
 import type { Request, Response } from "express";
 import { prisma } from "../../lib/prisma";
-import { AcademicYearStatus } from "../../generated/prisma-client/enums";
-
-interface AcademicYear {
-  schoolId: string;
-  name: string;
-  startDate: Date;
-  endDate: Date;
-  status: AcademicYearStatus;
-  isCurrent: boolean;
-  isLocked: boolean;
-  description?: string;
-}
-
-interface UpdateAcademicYear {
-  name?: string;
-  startDate?: Date;
-  endDate?: Date;
-  status?: AcademicYearStatus;
-  isCurrent?: boolean;
-  isLocked?: boolean;
-  description?: string | null;
-}
+import type { AcademicYear, UpdateAcademicYear } from "./academicYear.interface";
 
 class AcademicYearController {
   createAcademicYear = async (

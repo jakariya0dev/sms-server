@@ -1,19 +1,6 @@
 import type { Request, Response } from "express";
 import { prisma } from "../../lib/prisma";
-
-interface CreateSection {
-  schoolId: string;
-  classId: string;
-  name: string;
-  displayOrder: number;
-  isActive?: boolean;
-}
-
-interface UpdateSection {
-  name?: string;
-  displayOrder?: number;
-  isActive?: boolean;
-}
+import type { CreateSection, UpdateSection } from "./section.interface";
 
 class SectionController {
   createSection = async (

@@ -1,44 +1,6 @@
 import type { Request, Response } from "express";
-import { FeeFrequency } from "../../generated/prisma-client/enums";
 import { prisma } from "../../lib/prisma";
-
-interface CreateFeeCategory {
-  schoolId: string;
-  name: string;
-  description?: string | null;
-  isActive?: boolean;
-}
-
-interface UpdateFeeCategory {
-  name?: string;
-  description?: string | null;
-  isActive?: boolean;
-}
-
-interface CreateFeeStructure {
-  schoolId: string;
-  academicYearId: string;
-  classId: string;
-  feeCategoryId: string;
-  amount: number | string;
-  discount?: number | string | null;
-  lateFee?: number | string | null;
-  dueDate?: string | null;
-  frequency: FeeFrequency;
-  isActive?: boolean;
-}
-
-interface UpdateFeeStructure {
-  academicYearId?: string;
-  classId?: string;
-  feeCategoryId?: string;
-  amount?: number | string;
-  discount?: number | string | null;
-  lateFee?: number | string | null;
-  dueDate?: string | null;
-  frequency?: FeeFrequency;
-  isActive?: boolean;
-}
+import type { CreateFeeCategory, CreateFeeStructure, UpdateFeeCategory, UpdateFeeStructure } from "./fee.interface";
 
 class FeeController {
   createCategory = async (

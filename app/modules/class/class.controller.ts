@@ -1,18 +1,6 @@
 import type { Request, Response } from "express";
 import { prisma } from "../../lib/prisma";
-
-interface CreateClass {
-  schoolId: string;
-  name: string;
-  displayOrder: number;
-  isActive?: boolean;
-}
-
-interface UpdateClass {
-  name?: string;
-  displayOrder?: number;
-  isActive?: boolean;
-}
+import type { CreateClass, UpdateClass } from "./class.interface";
 
 class ClassController {
   createClass = async (

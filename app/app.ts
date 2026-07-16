@@ -3,7 +3,7 @@ import "dotenv/config";
 import type { Request, Response } from "express";
 
 // route imports
-import studentRouter from "./modules/students/student.routes";
+import studentRouter from "./modules/student/student.routes";
 import schoolRouter from "./modules/school/school.route";
 import academicYearRouter from "./modules/academic-year/academicYear.route";
 import classRouter from "./modules/class/class.route";

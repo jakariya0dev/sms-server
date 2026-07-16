@@ -1,77 +1,9 @@
 import type { Request, Response } from "express";
 import bcrypt from "bcrypt";
 import { prisma } from "../../lib/prisma";
+import { generateUniqueUsername } from "../../utils/username.util";
 import { UserRole } from "../../generated/prisma-client/enums";
-import type {
-  BloodGroup,
-  Department,
-  EmployeeStatus,
-  Gender,
-  Prisma,
-  Religion,
-  Shift,
-} from "../../generated/prisma-client/client";
-
-interface CreateTeacher {
-  schoolId: string;
-  name: string;
-  designation?: string | null;
-  specialization?: string | null;
-  photoUrl?: string | null;
-  phone?: string | null;
-  email?: string | null;
-  address?: string | null;
-  dateOfBirth?: Date | null;
-  gender?: Gender | null;
-  religion?: Religion | null;
-  bloodGroup?: BloodGroup | null;
-  department?: Department | null;
-  shift?: Shift | null;
-  status?: EmployeeStatus | null;
-  createdBy?: string | null;
-}
-
-interface UpdateTeacher {
-  name?: string;
-  designation?: string | null;
-  specialization?: string | null;
-  photoUrl?: string | null;
-  phone?: string | null;
-  email?: string | null;
-  address?: string | null;
-  dateOfBirth?: Date | null;
-  gender?: Gender | null;
-  religion?: Religion | null;
-  bloodGroup?: BloodGroup | null;
-  department?: Department | null;
-  shift?: Shift | null;
-  status?: EmployeeStatus | null;
-  updatedBy?: string | null;
-}
-
-const generateUniqueUsername = async (
-  tx: Prisma.TransactionClient,
-  schoolId: string,
-  name: string,
-): Promise<string> => {
-  const normalizedName = name
-    .trim()
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, ".")
-    .replace(/^\.+|\.+$/g, "");
-  const baseUsername = normalizedName || "teacher";
-
-  for (let suffix = 0; ; suffix += 1) {
-    const username =
-      suffix === 0 ? baseUsername : `${baseUsername}.${suffix + 1}`;
-    const existingUser = await tx.user.findUnique({
-      where: { schoolId_username: { schoolId, username } },
-      select: { id: true },
-    });
-
-    if (!existingUser) return username;
-  }
-};
+import type { CreateTeacher, UpdateTeacher } from "./teacher.interface";
 
 class TeacherController {
   createTeacher = async (
@@ -84,7 +16,7 @@ class TeacherController {
       const hashedPassword = await bcrypt.hash(temporaryPassword, 10);
 
       const { teacher, username } = await prisma.$transaction(async (tx) => {
-        const username = await generateUniqueUsername(tx, schoolId, name);
+        const username = await generateUniqueUsername(tx, schoolId, name, "teacher");
         const user = await tx.user.create({
           data: {
             schoolId,
