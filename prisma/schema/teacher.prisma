@@ -2,6 +2,7 @@ model Teacher {
   id             String          @id @default(uuid())
   schoolId       String
   userId         String          @unique
+  name           String
   designation    String?
   specialization String?
   photoUrl       String?
@@ -21,5 +22,5 @@ model Teacher {
   createdBy      String?
   updatedBy      String?
   school         School          @relation(fields: [schoolId], references: [id], onDelete: Cascade)
-  user           User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user           User?           @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

@@ -2,7 +2,7 @@ model School {
   id              String           @id @default(uuid())
   code            String           @unique @default(cuid())
   name            String
-  shortName       String?
+  shortName       String
   subdomain       String?          @unique
   email           String?
   phone           String?

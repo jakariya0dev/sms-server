@@ -8,6 +8,7 @@ import schoolRouter from "./modules/school/school.route";
 import academicYearRouter from "./modules/academic-year/academicYear.route";
 import classRouter from "./modules/class/class.route";
 import sectionRouter from "./modules/section/section.route";
+import teacherRouter from "./modules/teacher/teacher.route";
 
 const app = Express();
 
@@ -25,5 +26,6 @@ app.use("/schools", schoolRouter);
 app.use("/academic-year", academicYearRouter);
 app.use("/classes", classRouter);
 app.use("/sections", sectionRouter);
+app.use("/teachers", teacherRouter);
 
 export default app;
